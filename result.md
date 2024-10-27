@@ -1,1 +1,5 @@
-helpfulweight=2.5~3.3*helpful+1, helpful=10 amplication ::46
+6000+k=18～28 + pid =0.5235 38-5265  
+12000+k=38 + pid =0.52775,
+14000+k=48+pid=0.536 uid 545 
+32000+k=68=0.5505
+64000+k=88 0.557 helpdeno 0.56 withouttime: 0.554
