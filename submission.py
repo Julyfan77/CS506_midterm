@@ -6,7 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.preprocessing import MinMaxScaler,StandardScaler
-trainingSet = pd.read_csv("./train.csv")[:16000]
+trainingSet = pd.read_csv("./train.csv")[:19000]
 testingSet = pd.read_csv("./mytest.csv")
 
 print("train.csv shape is ", trainingSet.shape)
@@ -41,7 +41,7 @@ def add_features_to(df):
 
     df['Helpfulness'] = (df['HelpfulnessNumerator'] / df['HelpfulnessDenominator'])*10
     df['Helpfulness'] = df['Helpfulness'].fillna(0)
-    df['SummaryScore'] = df['Summary'].apply(calculate_score)*3
+    df['SummaryScore'] = df['Summary'].apply(calculate_score)*0
     #print(df['SummaryScore'][:5])
     return df
 
@@ -86,6 +86,10 @@ import numpy as np
 importlib.reload(KNN)
 model=KNN.CustomKNN(n_neighbors=38,use_weights="helpful")
 model.fit(X_train_select, Y_train)
+
+
+
+
 
 print(X_submission_select.shape)
 batch_size = 1000

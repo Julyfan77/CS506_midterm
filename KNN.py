@@ -25,6 +25,7 @@ class CustomKNN:
         self.uids=self.X_train[:, self.uindex]
         self.X_train=np.delete(self.X_train, self.uindex, axis=1)
         self.X_train=np.delete(self.X_train, self.pindex, axis=1)
+        #self.X_train=np.delete(self.X_train, self.hindex, axis=1)
         print("fit",self.X_train.shape)
         return self
     
@@ -63,6 +64,7 @@ class CustomKNN:
         # 3. 如果匹配的邻居数量足够，直接返回
         if len(sorted_pid_matching) >= self.n_neighbors:
             return sorted_pid_matching[:self.n_neighbors]
+       
 
         # 4. 如果 pid 匹配不够，继续找 uid 匹配的邻居（但 pid 不匹配）
         needed = self.n_neighbors - len(sorted_pid_matching)
@@ -85,12 +87,17 @@ class CustomKNN:
         non_matching_neighbors = [
             (self._euclidean_distance(x, train_sample), label, i)
             for i, (train_sample, label, pid, uid) in enumerate(zip(self.X_train, self.y_train, self.pids, self.uids))
-            if pid != x_pid and uid != x_uid
+            if pid != x_pid and uid!=x_uid
         ]
 
         # 8. 按距离排序其他非匹配邻居
         sorted_non_matching = sorted(non_matching_neighbors, key=lambda x: x[0])
-
+        # for k in range(10):
+        #     print("k==:",str(k))
+        #     print(non_matching_neighbors[k])
+        #     print(self.X_train[k])
+        # print("pid!!!")
+        #print(sorted_pid_matching)
         # 9. 合并所有邻居，补齐缺失部分
         additional_neighbors = sorted_uid_matching + sorted_non_matching[:remaining_needed]
         final_neighbors = sorted_pid_matching + additional_neighbors
@@ -141,6 +148,7 @@ class CustomKNN:
         x_uids = X[:, self.uindex] 
         X = np.delete(X, self.uindex, axis=1)
         X = np.delete(X, self.pindex, axis=1)
+        #X=np.delete(X, self.hindex, axis=1)
         cnt=0
         for sample, xpid,xuid in zip(X,x_pids,x_uids):
             cnt+=1
